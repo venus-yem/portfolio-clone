@@ -1,0 +1,172 @@
+/* ==========================================================================
+   React NativeReplacements for Bootstrap JS, AOS, & Magnific Popup
+   + Header Live Dark/Light Theme Toggle
+   ========================================================================== */
+
+/* 1. Scroll Reveal Animations (replaces AOS.js) */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal="fade-right"] {
+  transform: translateX(-24px);
+}
+
+[data-reveal="fade-left"] {
+  transform: translateX(24px);
+}
+
+[data-reveal="zoom-in"] {
+  transform: scale(0.96);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* 2. Pure React Offcanvas Drawer & Backdrop (replaces Bootstrap Offcanvas JS) */
+.react-offcanvas-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 8, 0.62);
+  backdrop-filter: blur(2px);
+  z-index: 1040;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.react-offcanvas-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#offcanvas.react-offcanvas {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1050;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.35s;
+}
+
+#offcanvas.react-offcanvas.show {
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* 3. Header Live Theme Mode Switcher */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Syne", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  padding: 6px 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(8, 8, 8, 0.22);
+  background: rgba(255, 255, 255, 0.45);
+  color: #080808;
+}
+
+.theme-toggle-btn:hover {
+  border-color: #ffb646;
+  background: #ffb646;
+  color: #080808;
+}
+
+.theme-toggle-btn--dark-bar {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.theme-toggle-btn--dark-bar:hover {
+  border-color: #ffb646;
+  background: #ffb646;
+  color: #080808;
+}
+
+/* 4. Accessible Video Lightbox Modal (replaces Magnific Popup) */
+.video-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.86);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeInModal 0.2s ease;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.video-modal-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 920px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+.video-modal-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  background: #ffb646;
+  color: #080808;
+  border: none;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-modal-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 920px;
+}
+
+/* 5. Contact Form Status Banner */
+.contact-status-banner {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  border: 1px solid #ffb646;
+  background: rgba(255, 182, 70, 0.14);
+}
