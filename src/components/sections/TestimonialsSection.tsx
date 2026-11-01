@@ -12,7 +12,8 @@ export const TestimonialsSection: React.FC = () => {
   return (
     <section
       className={`${isDark ? 'bg-dark' : 'bg-white'} py-120 testimonial`}
-      data-reveal="fade-up"
+      data-aos="fade-up"
+      data-aos-delay="400"
     >
       <div className="container">
         <div className="row align-items-center">

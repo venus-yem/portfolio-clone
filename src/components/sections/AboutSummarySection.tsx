@@ -1,29 +1,36 @@
 import React from 'react';
 import { PROFILE } from '../../data/siteData';
 import { useTheme } from '../../context/ThemeContext';
+import { imageSize } from '../../data/imageDimensions';
 import { ArrowUpRight } from '../Icons';
 
 export const AboutSummarySection: React.FC = () => {
   const { isDark } = useTheme();
   const titleColor = isDark ? 'text-white' : 'text-dark';
+  const aboutImage = isDark
+    ? '/assets/wp-content/uploads/2024/07/about-white-1.png'
+    : '/assets/wp-content/uploads/2024/07/about1.png';
 
   return (
     <section
       className={`about-section pb-120 ${isDark ? 'bg-dark dark-paragraph' : 'bg-white'}`}
-      data-reveal="fade-up"
+      data-aos="zoom-out"
+      data-aos-delay="800"
     >
       <div className="container">
-        <div className="row">
+        {/* row-gap-24: Bootstrap rows only carry a horizontal gutter
+            (--bs-gutter-y is 0), so these two columns touch once they
+            stack below the 992px lg breakpoint. */}
+        <div className="row row-gap-24">
           <div className="col-12 col-lg-6">
             <div className="position-relative">
               <img
                 decoding="async"
-                src={
-                  isDark
-                    ? '/assets/wp-content/uploads/2024/07/about-white-1.png'
-                    : '/assets/wp-content/uploads/2024/07/about1.png'
-                }
+                loading="lazy"
+                className="img-fluid"
+                src={aboutImage}
                 alt={PROFILE.fullName}
+                {...(imageSize(aboutImage) ?? {})}
               />
               <div className="d-flex flex-wrap flex-column position-absolute years-of-experience">
                 <span

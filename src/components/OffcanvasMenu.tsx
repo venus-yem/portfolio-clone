@@ -47,7 +47,13 @@ export const OffcanvasMenu: React.FC<OffcanvasMenuProps> = ({ isOpen, onClose })
         <div>
           <div className="d-flex flex-wrap justify-content-between align-items-center offcanvas-header">
             <Link to="/" onClick={onClose}>
-              <img src="/assets/wp-content/uploads/2024/07/offcanvas-logo.png" alt="Perez" />
+              <img
+                className="img-fluid"
+                src="/assets/wp-content/uploads/2024/07/offcanvas-logo.png"
+                alt="Perez"
+                width={95}
+                height={32}
+              />
             </Link>
             <button
               id="offcanvas-close"

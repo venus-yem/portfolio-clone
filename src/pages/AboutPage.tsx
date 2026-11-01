@@ -18,14 +18,16 @@ export const AboutPage: React.FC = () => {
   return (
     <>
       {/* 1. About Hero Section */}
-      <section className="bg-secondary pt-20 pb-120" data-reveal="zoom-in">
+      <section className="bg-secondary pt-20 pb-120" data-aos="zoom-in">
         <div className="container">
           <div className="about-grid">
             <img
               decoding="async"
-              className="mx-auto"
+              className="mx-auto img-fluid"
               src="/assets/wp-content/uploads/2024/07/about2.png"
               alt={PROFILE.fullName}
+              width={526}
+              height={560}
             />
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2">
               <span className="text-warning text-xl">About me</span>
@@ -43,8 +45,11 @@ export const AboutPage: React.FC = () => {
               <div>
                 <img
                   decoding="async"
+                  className="img-fluid"
                   src="/assets/wp-content/uploads/2024/07/signature.svg"
                   alt="Signature"
+                  width={195}
+                  height={86}
                 />
               </div>
             </div>
@@ -56,7 +61,7 @@ export const AboutPage: React.FC = () => {
       <section
         className={`${isDark ? 'bg-dark dark-paragraph' : 'bg-white'} py-120 overflow-x-hidden`}
       >
-        <div className="container" data-reveal="fade-up">
+        <div className="container" data-aos="zoom-out">
           <div className="about-grid-section-two">
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2">
               <h3 className={`${headingColor} section-title mb-5`}>
@@ -129,15 +134,18 @@ export const AboutPage: React.FC = () => {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <div className="position-relative" data-reveal="zoom-in">
+              <div className="position-relative" data-aos="zoom-in-up">
                 <img
                   decoding="async"
-                  className="rounded-2xl w-100"
+                  loading="lazy"
+                  className="rounded-2xl w-100 img-fluid"
                   src={
                     isDark
                       ? '/assets/wp-content/uploads/2024/07/video.png'
                       : '/assets/wp-content/uploads/2024/07/video-1.png'
                   }
+                  width={1296}
+                  height={668}
                   alt="Showreel preview"
                 />
                 <button

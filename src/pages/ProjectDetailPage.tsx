@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
+import { imageSize } from '../data/imageDimensions';
 import { getProjectBySlug, getRelatedProjects } from '../data/projects';
 import { useTheme } from '../context/ThemeContext';
 import { FeaturedWorkSection } from '../components/sections/FeaturedWorkSection';
@@ -27,7 +28,7 @@ export const ProjectDetailPage: React.FC = () => {
     <>
       {/* 1. Project Header & Banner */}
       <section className={`${isDark ? 'clr-dark ' : ''}bg-secondary pt-20`}>
-        <div className="max-w-1075 mx-auto banner-contents" data-reveal="fade-up">
+        <div className="max-w-1075 mx-auto banner-contents" data-aos="flip-down" data-aos-delay="300">
           <div className="row pb-12">
             <div className="col-12 col-lg-6 mb-10">
               <ul className="d-flex flex-wrap text-sm fw-normal font-Inter leading-tight p-0 list-unstyled">
@@ -83,9 +84,10 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="col-12">
               <img
                 decoding="async"
-                className="w-full rounded-20"
+                className="w-full rounded-20 img-fluid"
                 src={project.heroImage}
                 alt={project.title}
+                {...(imageSize(project.heroImage) ?? {})}
               />
             </div>
           </div>
@@ -127,6 +129,7 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="col-12 col-sm-5">
               <img
                 decoding="async"
+                loading="lazy"
                 className="w-100 h-100 rounded-20"
                 src={project.galleryImages[0]}
                 alt={`${project.title} showcase 1`}
@@ -135,6 +138,7 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="col-12 col-sm-7">
               <img
                 decoding="async"
+                loading="lazy"
                 className="w-100 h-100 rounded-20"
                 src={project.galleryImages[1]}
                 alt={`${project.title} showcase 2`}
@@ -163,6 +167,8 @@ export const ProjectDetailPage: React.FC = () => {
         showViewAllButton={false}
         bgClass={`${isDark ? 'bg-dark' : 'bg-white'} pb-120`}
         darkText={!isDark}
+        reveal="flip-down"
+        cardDelays={[0, 300]}
       />
     </>
   );

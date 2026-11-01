@@ -10,7 +10,7 @@ export const ServicesSection: React.FC = () => {
   return (
     <section className={isDark ? 'dark-paragraph py-120 bg-dark' : 'py-120 bg-white'}>
       <div className="container">
-        <div className="row mb-12 align-items-center" data-reveal="fade-up">
+        <div className="row mb-12 align-items-center" data-aos="fade-up" data-aos-delay="400">
           <div className="col-12 col-lg-6">
             <div className="fw-bold font-Syne lh-1 d-flex flex-wrap flex-column gap-y-2">
               <span className="text-warning text-xl">Services</span>
@@ -31,12 +31,20 @@ export const ServicesSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="row">
+        {/* row-gap-24 matches the service grid's own vertical rhythm. It only
+            does anything below 1280px, where col-xl-8 and col-xl-4 stop sitting
+            side by side and stack — Bootstrap's --bs-gutter-y is 0, so without
+            it the "Say Hello!" card butts straight up against the last card. */}
+        <div className="row row-gap-24">
           <div className="col-12 col-xl-8">
             <div className="row row-gap-24">
-              {SERVICES.map((svc) => (
+              {SERVICES.map((svc, svcIndex) => (
                 <div key={svc.projectSlug} className="col-12 col-sm-6 col-md-4">
-                  <div className="service-card" data-reveal="fade-up">
+                  <div
+                    className="service-card"
+                    data-aos="fade-up"
+                    data-aos-delay={500 + svcIndex * 200}
+                  >
                     <div className="d-flex flex-wrap align-items-center justify-content-center service-icon">
                       <ServiceIcons index={svc.iconIndex} />
                     </div>
@@ -59,7 +67,7 @@ export const ServicesSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="col-12 col-xl-4" data-reveal="zoom-in">
+          <div className="col-12 col-xl-4" data-aos="zoom-in" data-aos-delay="1000">
             <div className="d-flex flex-wrap flex-column justify-content-between service-contact-card">
               <div className="d-flex flex-wrap justify-content-end">
                 <Link to="/contact" className="animate-arrow-up" aria-label="Contact">

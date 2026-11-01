@@ -1,4 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
+/**
+ * Magnific Popup opens the showreel with `mainClass: 'mfp-fade', removalDelay: 160`.
+ * `removalDelay` is how long Magnific waits after starting the closing fade
+ * before it tears the wrapper out of the DOM — so the popup is removed about
+ * halfway through the 300ms fade-out. Same timings here.
+ */
+const MFP_REMOVAL_DELAY = 160;
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -7,6 +15,9 @@ interface VideoModalProps {
 }
 
 export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, embedUrl, onClose }) => {
+  const [mounted, setMounted] = useState(isOpen);
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -17,11 +28,32 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, embedUrl, onClos
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (isOpen) {
+      setMounted(true);
+
+      // Two frames, so the overlay is painted at opacity 0 before `.is-ready`
+      // lands — otherwise there is nothing for the 300ms fade to start from.
+      let innerRaf = 0;
+      const outerRaf = requestAnimationFrame(() => {
+        innerRaf = requestAnimationFrame(() => setReady(true));
+      });
+      return () => {
+        cancelAnimationFrame(outerRaf);
+        cancelAnimationFrame(innerRaf);
+      };
+    }
+
+    setReady(false);
+    const timer = window.setTimeout(() => setMounted(false), MFP_REMOVAL_DELAY);
+    return () => window.clearTimeout(timer);
+  }, [isOpen]);
+
+  if (!mounted) return null;
 
   return (
     <div
-      className="video-modal-overlay"
+      className={`video-modal-overlay${ready ? ' is-ready' : ''}`}
       onClick={onClose}
       role="dialog"
       aria-modal="true"

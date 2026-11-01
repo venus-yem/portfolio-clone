@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   AWARD_ITEMS,
@@ -20,29 +20,67 @@ const TAB_DEFS: { key: TabKey; label: string }[] = [
   { key: 'awards', label: 'Awards' },
 ];
 
+/**
+ * Bootstrap's `.fade` is `transition: opacity .15s linear`. Its Tab plugin runs
+ * the two halves back to back — the outgoing pane fades out, and only once that
+ * finishes does the incoming pane fade in — so a switch takes ~300ms.
+ */
+const TAB_FADE_MS = 150;
+
 interface ResumeTabsSectionProps {
   layout?: 'sidebar' | 'centered';
 }
 
 export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = 'sidebar' }) => {
   const { isDark } = useTheme();
+  // `activeTab` is what the tab buttons highlight (Bootstrap activates them
+  // immediately); `paneTab` is the pane currently painted, which trails by one
+  // fade so the outgoing content can animate out first.
   const [activeTab, setActiveTab] = useState<TabKey>('about');
+  const [paneTab, setPaneTab] = useState<TabKey>('about');
+  const [paneShown, setPaneShown] = useState(true);
   const headingColor = isDark ? 'text-white' : 'text-dark';
 
+  useEffect(() => {
+    if (activeTab === paneTab) return;
+
+    setPaneShown(false);
+    const timer = window.setTimeout(() => setPaneTab(activeTab), TAB_FADE_MS);
+    return () => window.clearTimeout(timer);
+  }, [activeTab, paneTab]);
+
+  useEffect(() => {
+    if (activeTab !== paneTab || paneShown) return;
+
+    // Two frames, so the pane is painted at opacity 0 before `.show` lands —
+    // otherwise the browser has no previous value to transition from.
+    let innerRaf = 0;
+    const outerRaf = requestAnimationFrame(() => {
+      innerRaf = requestAnimationFrame(() => setPaneShown(true));
+    });
+    return () => {
+      cancelAnimationFrame(outerRaf);
+      cancelAnimationFrame(innerRaf);
+    };
+  }, [activeTab, paneTab, paneShown]);
+
   const renderTabContent = () => {
-    switch (activeTab) {
+    switch (paneTab) {
       case 'about':
         return (
-          <div className="tab-pane fade show active">
+          <div className={`tab-pane fade${paneShown ? ' show' : ''} active`}>
             <div className="tab-contents">
               {layout === 'centered' ? (
                 <div className="row">
                   <div className="col-12 col-lg-5 mb-6 mb-lg-0">
                     <img
                       decoding="async"
-                      className="w-100 rounded-20"
+                      loading="lazy"
+                      className="w-100 rounded-20 img-fluid"
                       src="/assets/wp-content/uploads/2024/07/about3.png"
                       alt="About Mark Henry"
+                      width={526}
+                      height={496}
                     />
                   </div>
                   <div className="col-12 col-lg-7">
@@ -106,7 +144,7 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
 
       case 'experience':
         return (
-          <div className="tab-pane fade show active">
+          <div className={`tab-pane fade${paneShown ? ' show' : ''} active`}>
             <h4 className={`${headingColor} text-2xl based-in-german-title-tab fw-bold font-Syne`}>
               Experience
             </h4>
@@ -137,7 +175,7 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
 
       case 'education':
         return (
-          <div className="tab-pane fade show active">
+          <div className={`tab-pane fade${paneShown ? ' show' : ''} active`}>
             <h4 className={`${headingColor} text-2xl based-in-german-title-tab fw-bold font-Syne`}>
               Education
             </h4>
@@ -165,7 +203,7 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
 
       case 'skills':
         return (
-          <div className="tab-pane fade show active">
+          <div className={`tab-pane fade${paneShown ? ' show' : ''} active`}>
             <h4 className={`${headingColor} text-2xl based-in-german-title-tab fw-bold font-Syne`}>Skills</h4>
             <div className="skills-tab-contents">
               {SKILL_ITEMS.map((sk, idx) => (
@@ -189,7 +227,7 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
 
       case 'awards':
         return (
-          <div className="tab-pane fade show active">
+          <div className={`tab-pane fade${paneShown ? ' show' : ''} active`}>
             <h4 className={`${headingColor} text-2xl based-in-german-title-tab fw-bold font-Syne`}>Awards</h4>
             <div className="awards-tab-contents">
               {AWARD_ITEMS.map((aw, idx) => (
@@ -221,7 +259,7 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
   if (layout === 'centered') {
     return (
       <section className={`${isDark ? 'bg-dark-tab dark-paragraph ' : ''}featured-properties`}>
-        <div className="container" data-reveal="fade-up">
+        <div className="container" data-aos="zoom-out" data-aos-delay="800">
           <div className="row">
             <div className="col-12">
               <div className="fw-bold font-Syne text-center leading-none d-flex flex-wrap flex-column gap-y-2 mb-4">
@@ -268,8 +306,11 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
   return (
     <section className={`featured-properties${isDark ? ' dark-paragraph' : ''}`}>
       <div className="container">
-        <div className="row">
-          <div className="col-12 col-lg-5 col-2xl-4" data-reveal="fade-up">
+        {/* row-gap-24: Bootstrap rows only carry a horizontal gutter
+            (--bs-gutter-y is 0), so these two columns touch once they
+            stack below the 992px lg breakpoint. */}
+        <div className="row row-gap-24">
+          <div className="col-12 col-lg-5 col-2xl-4" data-aos="fade-up" data-aos-delay="300">
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2 mb-4">
               <span className="text-warning text-xl">Resume</span>
               <h3 className={`section-title circle-shape ${headingColor} position-relative`}>
@@ -298,7 +339,11 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
             </div>
           </div>
 
-          <div className="col-12 col-lg-7 col-2xl-8 featured-properties-space-left" data-reveal="fade-up">
+          <div
+            className="col-12 col-lg-7 col-2xl-8 featured-properties-space-left"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
             <div className="tab-content">{renderTabContent()}</div>
             <span className="d-flex justify-content-end mt-14 -mr-3">
               <SparkleStarSvg />

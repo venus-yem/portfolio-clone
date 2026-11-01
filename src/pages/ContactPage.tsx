@@ -53,7 +53,7 @@ export const ContactPage: React.FC = () => {
       <div className="container mx-auto">
         <div className="row mb-n6">
           {/* Left Column: Contact Details & Social */}
-          <div className="col-12 col-lg-6 mb-6" data-reveal="fade-up">
+          <div className="col-12 col-lg-6 mb-6" data-aos="fade-up">
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2 mb-10">
               <span className="text-warning text-xl">Contact</span>
               <h3 className={`section-title ${headingColor}`}>
@@ -169,7 +169,7 @@ export const ContactPage: React.FC = () => {
           </div>
 
           {/* Right Column: Controlled React Form */}
-          <div className="col-12 col-lg-6 mb-6" data-reveal="fade-up">
+          <div className="col-12 col-lg-6 mb-6" data-aos="fade-up" data-aos-delay="300">
             <form onSubmit={handleSubmit} className="wpcf7-form" noValidate>
               <div id="contact-form" className="row g-4">
                 <div className="col-12 col-md-6">

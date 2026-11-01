@@ -2,17 +2,24 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import { imageSize } from '../../data/imageDimensions';
 import { BRAND_LOGOS_DARK, BRAND_LOGOS_LIGHT } from '../../data/siteData';
 import { useTheme } from '../../context/ThemeContext';
 
-export const BrandCarouselSection: React.FC = () => {
+interface BrandCarouselSectionProps {
+  /** AOS stagger in ms. Home uses 600; the About page ships it with no delay. */
+  delay?: number;
+}
+
+export const BrandCarouselSection: React.FC<BrandCarouselSectionProps> = ({ delay }) => {
   const { isDark } = useTheme();
   const logos = isDark ? BRAND_LOGOS_DARK : BRAND_LOGOS_LIGHT;
 
   return (
     <div
       className={`${isDark ? 'bg-dark pb-120' : 'bg-white mb-120'} brandCarousel`}
-      data-reveal="fade-up"
+      data-aos="flip-down"
+      {...(delay ? { 'data-aos-delay': delay } : {})}
     >
       <div className="container">
         <Swiper
@@ -32,7 +39,14 @@ export const BrandCarouselSection: React.FC = () => {
         >
           {logos.map((logoUrl, idx) => (
             <SwiperSlide key={`${logoUrl}-${idx}`}>
-              <img decoding="async" className="mx-auto d-block" src={logoUrl} alt="Client brand logo" />
+              <img
+                decoding="async"
+                loading="lazy"
+                className="mx-auto d-block img-fluid"
+                src={logoUrl}
+                alt="Client brand logo"
+                {...(imageSize(logoUrl) ?? {})}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

@@ -32,7 +32,13 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMenu }) => {
         <div className="d-flex justify-content-between header-inner">
           <div className="header-border-bottom d-flex align-items-center justify-content-between flex-grow-1">
             <Link to="/">
-              <img src="/assets/wp-content/uploads/2024/07/logo-dark.png" alt="Perez" />
+              <img
+                className="img-fluid"
+                src="/assets/wp-content/uploads/2024/07/logo-dark.png"
+                alt="Perez"
+                width={95}
+                height={32}
+              />
             </Link>
             <div className="d-flex align-items-center gap-3">
               <button
@@ -83,12 +89,15 @@ export const Header: React.FC<HeaderProps> = ({ onOpenMenu }) => {
         <div className="flex-1 d-flex align-items-center justify-content-between">
           <Link to="/">
             <img
+              className="img-fluid"
               src={
                 isDark
                   ? '/assets/wp-content/uploads/2024/07/logo.png'
                   : '/assets/wp-content/uploads/2024/07/logo-dark.png'
               }
               alt="Perez"
+              width={95}
+              height={32}
             />
           </Link>
           <div className="d-flex align-items-center gap-3">
