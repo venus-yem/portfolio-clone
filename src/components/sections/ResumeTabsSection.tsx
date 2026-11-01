@@ -306,7 +306,10 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
   return (
     <section className={`featured-properties${isDark ? ' dark-paragraph' : ''}`}>
       <div className="container">
-        <div className="row">
+        {/* row-gap-24: Bootstrap rows only carry a horizontal gutter
+            (--bs-gutter-y is 0), so these two columns touch once they
+            stack below the 992px lg breakpoint. */}
+        <div className="row row-gap-24">
           <div className="col-12 col-lg-5 col-2xl-4" data-aos="fade-up" data-aos-delay="300">
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2 mb-4">
               <span className="text-warning text-xl">Resume</span>

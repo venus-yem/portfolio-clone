@@ -18,7 +18,10 @@ export const AboutSummarySection: React.FC = () => {
       data-aos-delay="800"
     >
       <div className="container">
-        <div className="row">
+        {/* row-gap-24: Bootstrap rows only carry a horizontal gutter
+            (--bs-gutter-y is 0), so these two columns touch once they
+            stack below the 992px lg breakpoint. */}
+        <div className="row row-gap-24">
           <div className="col-12 col-lg-6">
             <div className="position-relative">
               <img
