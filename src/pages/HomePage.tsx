@@ -21,7 +21,7 @@ export const HomePage: React.FC = () => {
       <ResumeTabsSection layout="sidebar" />
       <FeaturedWorkSection />
       <TestimonialsSection />
-      <BrandCarouselSection />
+      <BrandCarouselSection delay={600} />
       <PricingSection />
     </>
   );

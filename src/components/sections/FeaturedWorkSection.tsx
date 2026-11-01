@@ -9,6 +9,10 @@ interface FeaturedWorkSectionProps {
   showViewAllButton?: boolean;
   bgClass?: string;
   darkText?: boolean;
+  /** AOS animation name. Home fades up; Project Detail flips down. */
+  reveal?: string;
+  /** Per-card AOS stagger in ms, in card order. */
+  cardDelays?: number[];
 }
 
 export const FeaturedWorkSection: React.FC<FeaturedWorkSectionProps> = ({
@@ -17,14 +21,23 @@ export const FeaturedWorkSection: React.FC<FeaturedWorkSectionProps> = ({
   showViewAllButton = true,
   bgClass = 'bg-secondary py-120',
   darkText = true,
+  reveal = 'fade-up',
+  cardDelays = [600, 800],
 }) => {
   const titleColor = darkText ? 'text-dark' : 'text-white';
+  // A delay of 0 omits the attribute entirely, matching the original markup
+  // (aos.css has no [data-aos-delay="0"] rule, so "0" would fall back to the
+  // 100ms body-level default instead of no delay).
+  const delayFor = (index: number) => {
+    const value = cardDelays[index] ?? cardDelays[cardDelays.length - 1];
+    return value ? value : undefined;
+  };
 
   return (
     <section className={bgClass}>
       <div className="container">
         <div className="row mb-n6">
-          <div className="col-12" data-reveal="fade-up">
+          <div className="col-12" data-aos={reveal} data-aos-delay="400">
             <div className="fw-bold font-Syne text-center leading-none d-flex flex-wrap flex-column gap-y-2 mb-10">
               <span className="text-warning text-xl">Portfolio</span>
               <h3 className={`section-title ${titleColor}`}>
@@ -34,8 +47,13 @@ export const FeaturedWorkSection: React.FC<FeaturedWorkSectionProps> = ({
             </div>
           </div>
 
-          {projects.map((proj) => (
-            <div key={proj.slug} className="col-12 col-md-6 mb-6" data-reveal="fade-up">
+          {projects.map((proj, projIndex) => (
+            <div
+              key={proj.slug}
+              className="col-12 col-md-6 mb-6"
+              data-aos={reveal}
+              data-aos-delay={delayFor(projIndex)}
+            >
               <div className="rounded-20 overflow-hidden mb-6">
                 <Link to={`/projects/${proj.slug}`}>
                   <img
@@ -80,7 +98,7 @@ export const FeaturedWorkSection: React.FC<FeaturedWorkSectionProps> = ({
         </div>
 
         {showViewAllButton && (
-          <div className="col-12 mt-12" data-reveal="fade-up">
+          <div className="col-12 mt-12" data-aos={reveal} data-aos-delay="600">
             <div className="d-flex justify-content-center">
               <Link to="/projects" className="d-flex align-items-center flex-wrap btn-primary">
                 View All Project

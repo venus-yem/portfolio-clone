@@ -221,7 +221,7 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
   if (layout === 'centered') {
     return (
       <section className={`${isDark ? 'bg-dark-tab dark-paragraph ' : ''}featured-properties`}>
-        <div className="container" data-reveal="fade-up">
+        <div className="container" data-aos="zoom-out" data-aos-delay="800">
           <div className="row">
             <div className="col-12">
               <div className="fw-bold font-Syne text-center leading-none d-flex flex-wrap flex-column gap-y-2 mb-4">
@@ -269,7 +269,7 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
     <section className={`featured-properties${isDark ? ' dark-paragraph' : ''}`}>
       <div className="container">
         <div className="row">
-          <div className="col-12 col-lg-5 col-2xl-4" data-reveal="fade-up">
+          <div className="col-12 col-lg-5 col-2xl-4" data-aos="fade-up" data-aos-delay="300">
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2 mb-4">
               <span className="text-warning text-xl">Resume</span>
               <h3 className={`section-title circle-shape ${headingColor} position-relative`}>
@@ -298,7 +298,11 @@ export const ResumeTabsSection: React.FC<ResumeTabsSectionProps> = ({ layout = '
             </div>
           </div>
 
-          <div className="col-12 col-lg-7 col-2xl-8 featured-properties-space-left" data-reveal="fade-up">
+          <div
+            className="col-12 col-lg-7 col-2xl-8 featured-properties-space-left"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
             <div className="tab-content">{renderTabContent()}</div>
             <span className="d-flex justify-content-end mt-14 -mr-3">
               <SparkleStarSvg />

@@ -4,6 +4,9 @@ import { getProjectsByTag } from '../data/projects';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowUpRight40 } from '../components/Icons';
 
+/** Mirrors the /projects cadence — there is no original template for this route. */
+const TAG_STAGGER = [600, 800, 1000, 1200, 1400];
+
 export const ProjectTagPage: React.FC = () => {
   const { tag } = useParams<{ tag: string }>();
   const { isDark } = useTheme();
@@ -22,7 +25,7 @@ export const ProjectTagPage: React.FC = () => {
     <section className={`${isDark ? 'bg-dark' : 'bg-white'} pt-20 pb-120`}>
       <div className="container">
         <div className="row mb-10">
-          <div className="col-12" data-reveal="fade-up">
+          <div className="col-12" data-aos="flip-down" data-aos-delay="400">
             <div className="fw-bold font-Syne text-center leading-none d-flex flex-wrap flex-column gap-y-2">
               <span className="text-warning text-xl">Tag: {tagLabel}</span>
               <h3 className={`section-title ${headingColor}`}>
@@ -33,8 +36,13 @@ export const ProjectTagPage: React.FC = () => {
         </div>
 
         <div className="row g-6">
-          {projects.map((proj) => (
-            <div key={proj.slug} className="col-12 col-md-6" data-reveal="fade-up">
+          {projects.map((proj, projIndex) => (
+            <div
+              key={proj.slug}
+              className="col-12 col-md-6"
+              data-aos="flip-down"
+              data-aos-delay={TAG_STAGGER[projIndex % TAG_STAGGER.length]}
+            >
               <div className="rounded-20 overflow-hidden mb-6">
                 <Link to={`/projects/${proj.slug}`}>
                   <img

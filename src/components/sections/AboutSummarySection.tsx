@@ -10,7 +10,8 @@ export const AboutSummarySection: React.FC = () => {
   return (
     <section
       className={`about-section pb-120 ${isDark ? 'bg-dark dark-paragraph' : 'bg-white'}`}
-      data-reveal="fade-up"
+      data-aos="zoom-out"
+      data-aos-delay="800"
     >
       <div className="container">
         <div className="row">

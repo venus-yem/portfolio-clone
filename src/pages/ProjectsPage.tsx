@@ -4,6 +4,12 @@ import { BENTO_PROJECTS } from '../data/projects';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowUpRight40 } from '../components/Icons';
 
+/**
+ * The original projects.html staggers its seven tiles 600/800/1000/1200/1400
+ * and then wraps. This clone has ten, so the cadence repeats on a 5-step cycle.
+ */
+const BENTO_STAGGER = [600, 800, 1000, 1200, 1400];
+
 export const ProjectsPage: React.FC = () => {
   const { isDark } = useTheme();
 
@@ -15,7 +21,7 @@ export const ProjectsPage: React.FC = () => {
     <section className={`${isDark ? 'bg-dark' : 'bg-white'} pt-20 pb-120`}>
       <div className="container mx-auto">
         <div className="row">
-          <div className="col-12" data-reveal="fade-up">
+          <div className="col-12" data-aos="flip-down" data-aos-delay="400">
             <div className="fw-bold font-Syne text-center leading-none d-flex flex-wrap flex-column gap-y-2 mb-10">
               <span className="text-warning text-xl">Portfolio</span>
               <h3 className={`section-title ${isDark ? 'text-white' : 'text-dark'}`}>
@@ -26,8 +32,13 @@ export const ProjectsPage: React.FC = () => {
         </div>
 
         <div className="row g-6">
-          {BENTO_PROJECTS.map((proj) => (
-            <div key={proj.slug} className={proj.bentoColClass || 'col-12 col-md-6'} data-reveal="fade-up">
+          {BENTO_PROJECTS.map((proj, projIndex) => (
+            <div
+              key={proj.slug}
+              className={proj.bentoColClass || 'col-12 col-md-6'}
+              data-aos="flip-down"
+              data-aos-delay={BENTO_STAGGER[projIndex % BENTO_STAGGER.length]}
+            >
               <div className="overflow-hidden position-relative project-item">
                 <img
                   decoding="async"

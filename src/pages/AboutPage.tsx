@@ -18,7 +18,7 @@ export const AboutPage: React.FC = () => {
   return (
     <>
       {/* 1. About Hero Section */}
-      <section className="bg-secondary pt-20 pb-120" data-reveal="zoom-in">
+      <section className="bg-secondary pt-20 pb-120" data-aos="zoom-in">
         <div className="container">
           <div className="about-grid">
             <img
@@ -56,7 +56,7 @@ export const AboutPage: React.FC = () => {
       <section
         className={`${isDark ? 'bg-dark dark-paragraph' : 'bg-white'} py-120 overflow-x-hidden`}
       >
-        <div className="container" data-reveal="fade-up">
+        <div className="container" data-aos="zoom-out">
           <div className="about-grid-section-two">
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2">
               <h3 className={`${headingColor} section-title mb-5`}>
@@ -129,7 +129,7 @@ export const AboutPage: React.FC = () => {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <div className="position-relative" data-reveal="zoom-in">
+              <div className="position-relative" data-aos="zoom-in-up">
                 <img
                   decoding="async"
                   className="rounded-2xl w-100"

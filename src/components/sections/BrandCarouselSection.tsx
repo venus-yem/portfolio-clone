@@ -5,14 +5,20 @@ import 'swiper/css';
 import { BRAND_LOGOS_DARK, BRAND_LOGOS_LIGHT } from '../../data/siteData';
 import { useTheme } from '../../context/ThemeContext';
 
-export const BrandCarouselSection: React.FC = () => {
+interface BrandCarouselSectionProps {
+  /** AOS stagger in ms. Home uses 600; the About page ships it with no delay. */
+  delay?: number;
+}
+
+export const BrandCarouselSection: React.FC<BrandCarouselSectionProps> = ({ delay }) => {
   const { isDark } = useTheme();
   const logos = isDark ? BRAND_LOGOS_DARK : BRAND_LOGOS_LIGHT;
 
   return (
     <div
       className={`${isDark ? 'bg-dark pb-120' : 'bg-white mb-120'} brandCarousel`}
-      data-reveal="fade-up"
+      data-aos="flip-down"
+      {...(delay ? { 'data-aos-delay': delay } : {})}
     >
       <div className="container">
         <Swiper

@@ -3,13 +3,13 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { OffcanvasMenu } from './OffcanvasMenu';
 import { Footer } from './Footer';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useAos } from '../hooks/useAos';
 
 export const Layout: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
-  useScrollReveal();
+  useAos();
 
   useEffect(() => {
     try {

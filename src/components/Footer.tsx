@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
   return (
     <footer className="footer bg-black">
       <div className="container">
-        <div className="overflow-x-hidden" data-reveal="fade-up">
+        <div className="overflow-x-hidden" data-aos="flip-down" data-aos-delay="500">
           <div className="footer-grid">
             <div className="pt-12">
               <h3 className="section-title text-white mb-0">

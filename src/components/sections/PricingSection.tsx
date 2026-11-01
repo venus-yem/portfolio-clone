@@ -16,7 +16,8 @@ export const PricingSection: React.FC = () => {
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-16">
               <div
                 className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2 pricing-title-section"
-                data-reveal="fade-up"
+                data-aos="fade-up"
+                data-aos-delay="400"
               >
                 <span className="text-warning text-xl">Pricing</span>
                 <h3 className={`section-title ${headingColor}`}>
@@ -25,7 +26,7 @@ export const PricingSection: React.FC = () => {
                 </h3>
               </div>
 
-              <div className="d-flex contact-for-custom-project" data-reveal="fade-up">
+              <div className="d-flex contact-for-custom-project" data-aos="fade-up" data-aos-delay="700">
                 <Link to="/contact" className="d-flex align-items-center flex-wrap btn-primary">
                   Contact for Custom Project
                   <span className="d-inline-block ml-3 animate-arrow-up">
@@ -38,11 +39,12 @@ export const PricingSection: React.FC = () => {
         </div>
 
         <div className="prcing-grid">
-          {PRICING_PLANS.map((plan) => (
+          {PRICING_PLANS.map((plan, planIndex) => (
             <div
               key={plan.name}
               className="transition-all d-flex flex-wrap flex-column pricing-item"
-              data-reveal="fade-up"
+              data-aos="fade-up"
+              data-aos-delay={500 + planIndex * 200}
             >
               <div className="d-flex align-items-center justify-content-between">
                 <span className="text-lg fw-normal font-sans leading-none pricing-plan">{plan.name}</span>
