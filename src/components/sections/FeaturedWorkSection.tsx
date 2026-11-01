@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { imageSize } from '../../data/imageDimensions';
 import { HOME_FEATURED_PROJECTS, ProjectItem } from '../../data/projects';
 import { ArrowUpRight, ArrowUpRight40 } from '../Icons';
 
@@ -58,9 +59,11 @@ export const FeaturedWorkSection: React.FC<FeaturedWorkSectionProps> = ({
                 <Link to={`/projects/${proj.slug}`}>
                   <img
                     decoding="async"
-                    className="w-100"
+                    loading="lazy"
+                    className="w-100 img-fluid"
                     src={proj.homeCardImage || proj.cardImage}
                     alt={proj.title}
+                    {...(imageSize(proj.homeCardImage || proj.cardImage) ?? {})}
                   />
                 </Link>
               </div>

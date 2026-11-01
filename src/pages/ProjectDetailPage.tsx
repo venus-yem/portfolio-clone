@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
+import { imageSize } from '../data/imageDimensions';
 import { getProjectBySlug, getRelatedProjects } from '../data/projects';
 import { useTheme } from '../context/ThemeContext';
 import { FeaturedWorkSection } from '../components/sections/FeaturedWorkSection';
@@ -83,9 +84,10 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="col-12">
               <img
                 decoding="async"
-                className="w-full rounded-20"
+                className="w-full rounded-20 img-fluid"
                 src={project.heroImage}
                 alt={project.title}
+                {...(imageSize(project.heroImage) ?? {})}
               />
             </div>
           </div>
@@ -127,6 +129,7 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="col-12 col-sm-5">
               <img
                 decoding="async"
+                loading="lazy"
                 className="w-100 h-100 rounded-20"
                 src={project.galleryImages[0]}
                 alt={`${project.title} showcase 1`}
@@ -135,6 +138,7 @@ export const ProjectDetailPage: React.FC = () => {
             <div className="col-12 col-sm-7">
               <img
                 decoding="async"
+                loading="lazy"
                 className="w-100 h-100 rounded-20"
                 src={project.galleryImages[1]}
                 alt={`${project.title} showcase 2`}

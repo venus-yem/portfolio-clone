@@ -89,16 +89,28 @@ export function useAos(): void {
   }, [location.pathname]);
 
   useEffect(() => {
-    // Late-loading images and webfonts shift layout, which invalidates the
-    // cached trigger offsets AOS computed at mount.
-    const onLoad = () => AOS.refresh();
+    // Lazy-loaded images, webfonts and tab switches all change the document
+    // height, which invalidates the trigger offsets AOS cached at mount. AOS
+    // only listens for *viewport* resizes, so watch the document itself.
+    let timer = 0;
+    const refresh = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => AOS.refresh(), 100);
+    };
 
-    if (document.readyState === 'complete') {
-      onLoad();
-      return;
+    refresh();
+    window.addEventListener('load', refresh);
+
+    const observer =
+      typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(refresh);
+    if (observer && document.body) {
+      observer.observe(document.body);
     }
 
-    window.addEventListener('load', onLoad);
-    return () => window.removeEventListener('load', onLoad);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('load', refresh);
+      observer?.disconnect();
+    };
   }, [location.pathname]);
 }

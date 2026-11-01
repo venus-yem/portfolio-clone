@@ -24,7 +24,14 @@ export const HeroSection: React.FC = () => {
                   </svg>
                 </span>
                 Hello, I&apos;m
-                <img decoding="async" src="/assets/wp-content/uploads/2024/07/victory.png" alt="Wave" />
+                <img
+                  decoding="async"
+                  className="img-fluid"
+                  src="/assets/wp-content/uploads/2024/07/victory.png"
+                  alt="Wave"
+                  width={20}
+                  height={32}
+                />
               </span>
 
               <h1
@@ -111,10 +118,13 @@ export const HeroSection: React.FC = () => {
       <div className="d-none d-md-block">
         <img
           decoding="async"
-          className="position-absolute top-0 end-0 hero-image"
+          fetchPriority="high"
+          className="position-absolute top-0 end-0 hero-image img-fluid"
           data-aos="fade-left"
           src="/assets/wp-content/uploads/2024/07/hero.png"
           alt={PROFILE.fullName}
+          width={788}
+          height={767}
         />
         <Link to="/contact" className="contact-spin" aria-label="Contact Me">
           <HeroSpinBadge />

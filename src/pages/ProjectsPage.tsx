@@ -42,6 +42,7 @@ export const ProjectsPage: React.FC = () => {
               <div className="overflow-hidden position-relative project-item">
                 <img
                   decoding="async"
+                  loading="lazy"
                   className="w-100 h-100"
                   src={proj.cardImage}
                   alt={proj.title}

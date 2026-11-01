@@ -1,11 +1,15 @@
 import React from 'react';
 import { PROFILE } from '../../data/siteData';
 import { useTheme } from '../../context/ThemeContext';
+import { imageSize } from '../../data/imageDimensions';
 import { ArrowUpRight } from '../Icons';
 
 export const AboutSummarySection: React.FC = () => {
   const { isDark } = useTheme();
   const titleColor = isDark ? 'text-white' : 'text-dark';
+  const aboutImage = isDark
+    ? '/assets/wp-content/uploads/2024/07/about-white-1.png'
+    : '/assets/wp-content/uploads/2024/07/about1.png';
 
   return (
     <section
@@ -19,12 +23,11 @@ export const AboutSummarySection: React.FC = () => {
             <div className="position-relative">
               <img
                 decoding="async"
-                src={
-                  isDark
-                    ? '/assets/wp-content/uploads/2024/07/about-white-1.png'
-                    : '/assets/wp-content/uploads/2024/07/about1.png'
-                }
+                loading="lazy"
+                className="img-fluid"
+                src={aboutImage}
                 alt={PROFILE.fullName}
+                {...(imageSize(aboutImage) ?? {})}
               />
               <div className="d-flex flex-wrap flex-column position-absolute years-of-experience">
                 <span

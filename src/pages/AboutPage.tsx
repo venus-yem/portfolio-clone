@@ -23,9 +23,11 @@ export const AboutPage: React.FC = () => {
           <div className="about-grid">
             <img
               decoding="async"
-              className="mx-auto"
+              className="mx-auto img-fluid"
               src="/assets/wp-content/uploads/2024/07/about2.png"
               alt={PROFILE.fullName}
+              width={526}
+              height={560}
             />
             <div className="fw-bold font-Syne leading-none d-flex flex-wrap flex-column gap-y-2">
               <span className="text-warning text-xl">About me</span>
@@ -43,8 +45,11 @@ export const AboutPage: React.FC = () => {
               <div>
                 <img
                   decoding="async"
+                  className="img-fluid"
                   src="/assets/wp-content/uploads/2024/07/signature.svg"
                   alt="Signature"
+                  width={195}
+                  height={86}
                 />
               </div>
             </div>
@@ -132,12 +137,15 @@ export const AboutPage: React.FC = () => {
               <div className="position-relative" data-aos="zoom-in-up">
                 <img
                   decoding="async"
-                  className="rounded-2xl w-100"
+                  loading="lazy"
+                  className="rounded-2xl w-100 img-fluid"
                   src={
                     isDark
                       ? '/assets/wp-content/uploads/2024/07/video.png'
                       : '/assets/wp-content/uploads/2024/07/video-1.png'
                   }
+                  width={1296}
+                  height={668}
                   alt="Showreel preview"
                 />
                 <button

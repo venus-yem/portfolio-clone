@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { imageSize } from '../data/imageDimensions';
 import { getProjectsByTag } from '../data/projects';
 import { useTheme } from '../context/ThemeContext';
 import { ArrowUpRight40 } from '../components/Icons';
@@ -47,9 +48,11 @@ export const ProjectTagPage: React.FC = () => {
                 <Link to={`/projects/${proj.slug}`}>
                   <img
                     decoding="async"
-                    className="w-100"
+                    loading="lazy"
+                    className="w-100 img-fluid"
                     src={proj.homeCardImage || proj.cardImage}
                     alt={proj.title}
+                    {...(imageSize(proj.homeCardImage || proj.cardImage) ?? {})}
                   />
                 </Link>
               </div>

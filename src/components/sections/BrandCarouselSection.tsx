@@ -2,6 +2,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import { imageSize } from '../../data/imageDimensions';
 import { BRAND_LOGOS_DARK, BRAND_LOGOS_LIGHT } from '../../data/siteData';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -38,7 +39,14 @@ export const BrandCarouselSection: React.FC<BrandCarouselSectionProps> = ({ dela
         >
           {logos.map((logoUrl, idx) => (
             <SwiperSlide key={`${logoUrl}-${idx}`}>
-              <img decoding="async" className="mx-auto d-block" src={logoUrl} alt="Client brand logo" />
+              <img
+                decoding="async"
+                loading="lazy"
+                className="mx-auto d-block img-fluid"
+                src={logoUrl}
+                alt="Client brand logo"
+                {...(imageSize(logoUrl) ?? {})}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

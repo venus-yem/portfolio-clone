@@ -21,9 +21,17 @@
   .counter:not(.is-visible) {
     visibility: visible !important;
   }
+
+  #offcanvas.react-offcanvas,
+  .react-offcanvas-backdrop,
+  .video-modal-overlay,
+  .video-modal-dialog {
+    transition: none !important;
+  }
 }
 
 /* 2. Pure React Offcanvas Drawer & Backdrop (replaces Bootstrap Offcanvas JS) */
+/* Bootstrap: `.offcanvas-backdrop` is a `.fade`, i.e. `opacity .15s linear`. */
 .react-offcanvas-backdrop {
   position: fixed;
   inset: 0;
@@ -32,7 +40,7 @@
   z-index: 1040;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.15s linear;
 }
 
 .react-offcanvas-backdrop.is-open {
@@ -40,6 +48,10 @@
   pointer-events: auto;
 }
 
+/* Bootstrap: `.offcanvas { transition: transform .3s ease-in-out }`.
+   Visibility is not transitioned — Bootstrap keeps the panel visible through a
+   `hiding` class until the slide-out ends. Delaying the visibility switch by
+   the transition duration reproduces that with a single class. */
 #offcanvas.react-offcanvas {
   position: fixed;
   top: 0;
@@ -48,12 +60,13 @@
   z-index: 1050;
   visibility: hidden;
   transform: translateX(100%);
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.35s;
+  transition: transform 0.3s ease-in-out, visibility 0s linear 0.3s;
 }
 
 #offcanvas.react-offcanvas.show {
   visibility: visible;
   transform: translateX(0);
+  transition: transform 0.3s ease-in-out, visibility 0s linear 0s;
 }
 
 /* 3. Header Live Theme Mode Switcher */
@@ -93,6 +106,15 @@
 }
 
 /* 4. Accessible Video Lightbox Modal (replaces Magnific Popup) */
+/* Magnific Popup's `mfp-fade` (the theme opens the showreel with
+   `mainClass: 'mfp-fade', removalDelay: 160`):
+     .mfp-fade.mfp-bg                       { opacity: 0;   transition: all 0.3s ease-out }
+     .mfp-fade.mfp-bg.mfp-ready             { opacity: 0.8 }
+     .mfp-fade.mfp-wrap .mfp-content        { opacity: 0;   transition: all 0.3s ease-out }
+     .mfp-fade.mfp-wrap.mfp-ready .mfp-content { opacity: 1 }
+   Overlay and dialog fade together over 300ms; `VideoModal` unmounts the wrapper
+   160ms into the closing fade, exactly like Magnific's removalDelay.
+*/
 .video-modal-overlay {
   position: fixed;
   inset: 0;
@@ -102,12 +124,12 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
-  animation: fadeInModal 0.2s ease;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
 }
 
-@keyframes fadeInModal {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.video-modal-overlay.is-ready {
+  opacity: 1;
 }
 
 .video-modal-dialog {
@@ -119,6 +141,12 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
+.video-modal-overlay.is-ready .video-modal-dialog {
+  opacity: 1;
 }
 
 .video-modal-close {

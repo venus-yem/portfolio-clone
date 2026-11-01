@@ -16,6 +16,22 @@ Two plumbing details exist only because AOS is running inside a React SPA; neith
 1. `initAos()` runs in `main.tsx` **before** the first render, so AOS's own initial scan finds no elements and never tags one before it has been painted.
 2. `disableMutationObserver: true` — AOS's MutationObserver fires as a microtask, i.e. before paint, which would make the browser skip the transition. Refreshes are driven from React instead (double `requestAnimationFrame`, then `AOS.refreshHard()` on route change).
 
+### UI transitions
+
+The remaining interface timings also follow the original's libraries rather than being re-invented:
+
+- **Resume tabs** — Bootstrap's Tab plugin cross-fade: `.fade` is `opacity .15s linear`, and the outgoing pane fades out *before* the incoming one fades in (~300ms total). `ResumeTabsSection` keeps the selected tab and the painted pane as separate pieces of state to reproduce that ordering.
+- **Offcanvas menu** — Bootstrap's `transform .3s ease-in-out` with a `.15s linear` backdrop fade. Visibility is delayed by the transition duration so the panel stays visible for the whole slide-out, which is what Bootstrap's `hiding` class does.
+- **Showreel modal** — Magnific Popup's `mfp-fade`: overlay and dialog both fade over `0.3s ease-out`, and the wrapper unmounts 160ms into the closing fade (`removalDelay: 160` in the theme's `main.js`).
+
+### Images
+
+`public/assets` is ~14 MB, so images are now deferred and given reserved space:
+
+- `loading="lazy"` + `decoding="async"` on everything below the fold; the hero image stays eager with `fetchPriority="high"`. The offcanvas logo stays eager too — it would otherwise pop in mid slide.
+- Real `width` / `height` attributes from `src/data/imageDimensions.ts` (generated from the files on disk), paired with Bootstrap's `.img-fluid` (`max-width: 100%; height: auto`) so a constrained width still scales proportionally.
+- Because layout no longer shifts as images arrive, the scroll offsets AOS caches stay valid. `useAos` also watches `document.body` with a debounced `ResizeObserver` as a backstop, since AOS only listens for *viewport* resizes.
+
 ## Features
 - **Live Dark / Light Theme Toggle (`src/context/ThemeContext.tsx`):** Instant header switcher persisted to `localStorage`, plus `?theme=dark|light` and `/dark` / `/light` URL support.
 - **Data-Driven Architecture (`src/data/`):** All 10 portfolio case studies, 6 service cards, 5 resume tabs, testimonials, brand logos, and pricing plans live in typed TypeScript modules (`projects.ts`, `siteData.ts`).

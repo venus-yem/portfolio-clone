@@ -97,9 +97,13 @@ export const Footer: React.FC = () => {
             <div className="col-12">
               <div className="py-72">
                 <img
-                  className="w-100"
+                  decoding="async"
+                  loading="lazy"
+                  className="w-100 img-fluid"
                   src="/assets/wp-content/uploads/2024/07/ft-ctn.png"
                   alt="Perez"
+                  width={1409}
+                  height={84}
                 />
               </div>
             </div>
