@@ -31,7 +31,11 @@ export const ServicesSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="row">
+        {/* row-gap-24 matches the service grid's own vertical rhythm. It only
+            does anything below 1280px, where col-xl-8 and col-xl-4 stop sitting
+            side by side and stack — Bootstrap's --bs-gutter-y is 0, so without
+            it the "Say Hello!" card butts straight up against the last card. */}
+        <div className="row row-gap-24">
           <div className="col-12 col-xl-8">
             <div className="row row-gap-24">
               {SERVICES.map((svc, svcIndex) => (
