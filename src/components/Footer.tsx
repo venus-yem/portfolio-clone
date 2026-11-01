@@ -110,43 +110,41 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="pt-6 copyright">
-            <div className="row">
-              <div className="col-12 col-sm-8 order-last order-sm-first">
-                <p className="text-white text-lg fw-normal font-sans leading-7">
-                  ©{new Date().getFullYear()} {PROFILE.fullName}, All Rights Reserved
-                </p>
-              </div>
-              <div className="col-12 col-sm-4 order-first order-sm-last">
-                <div className="d-flex justify-content-end mb-2 mb-sm-0">
-                  <a
-                    id="scrollUp"
-                    onClick={scrollToTop}
-                    className="d-flex flex-wrap align-items-center gap-2"
-                    href="#top"
-                    aria-label="Scroll to top"
-                  >
-                    <span className="text-white text-lg fw-normal font-sans leading-7 transition-all">
-                      Back To Top
-                    </span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M12 19V5"
-                        stroke="#FFB646"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M19 12L12 5L5 12"
-                        stroke="#FFB646"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+            {/* One flex line at every width. The template's `col-12 col-sm-8` +
+                `col-12 col-sm-4 order-first` split stacks below the 576px `sm`
+                breakpoint, and the base `order-first` puts "Back To Top" *above*
+                the copyright line instead of beside it. */}
+            <div className="d-flex align-items-start justify-content-between gap-3">
+              <p className="text-white text-lg fw-normal font-sans leading-7">
+                ©{new Date().getFullYear()} {PROFILE.fullName}, All Rights Reserved
+              </p>
+              <a
+                id="scrollUp"
+                onClick={scrollToTop}
+                className="d-flex flex-wrap align-items-center gap-2 flex-shrink-0"
+                href="#top"
+                aria-label="Scroll to top"
+              >
+                <span className="text-white text-lg fw-normal font-sans leading-7 transition-all">
+                  Back To Top
+                </span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12 19V5"
+                    stroke="#FFB646"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M19 12L12 5L5 12"
+                    stroke="#FFB646"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
